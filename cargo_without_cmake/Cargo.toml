@@ -1,0 +1,23 @@
+# SPDX-FileCopyrightText: 2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+# SPDX-FileContributor: Andrew Hayzen <andrew.hayzen@kdab.com>
+# SPDX-FileContributor: Gerhard de Clercq <gerhard.declercq@kdab.com>
+#
+# SPDX-License-Identifier: MIT OR Apache-2.0
+
+# ANCHOR: book_cargo_toml_no_cmake
+[package]
+name = "qml-minimal-no-cmake"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+# Use `cxx-qt = "0.5"` here instead!
+cxx-qt = "=0.5.3"
+# Use `cxx-qt-lib = "0.5"` here instead!
+cxx-qt-lib = "=0.5.3"
+
+[build-dependencies]
+# Use `cxx-qt-build = "0.5"` here instead!
+cxx-qt-build = "=0.5.3"
+# ANCHOR_END: book_cargo_toml_no_cmake
