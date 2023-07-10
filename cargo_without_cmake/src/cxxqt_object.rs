@@ -23,7 +23,7 @@ pub mod ffi {
 
     /// The Rust struct for the QObject
     // ANCHOR: book_rustobj_struct
-    #[cxx_qt::qobject(qml_uri = "com.kdab.cxx_qt.demo", qml_version = "1.0")]
+    #[cxx_qt::qobject(qml_uri = "examples_cxx_qt", qml_version = "1.0")]
     pub struct MyObject {
         #[qproperty]
         number: i32,
@@ -42,37 +42,19 @@ pub mod ffi {
         }
     }
     // ANCHOR_END: book_rustobj_default
-
-    // ANCHOR: book_rustobj_invokable_signature
-    unsafe extern "RustQt" {
+    //
+    impl qobject::MyObject {
+        /// Increment the number Q_PROPERTY
         #[qinvokable]
-        fn increment_number(self: Pin<&mut qobject::MyObject>);
+        pub fn increment_number(self: Pin<&mut Self>) {
+            let previous = *self.as_ref().number();
+            self.set_number(previous + 1);
+        }
 
+        /// Print a log message with the given string and number
         #[qinvokable]
-        fn say_hi(self: &qobject::MyObject, string: &QString, number: i32);
-    }
-    // ANCHOR_END: book_rustobj_invokable_signature
-}
-
-use core::pin::Pin;
-use cxx_qt_lib::QString;
-
-// TODO: this will change to qobject::MyObject once
-// https://github.com/KDAB/cxx-qt/issues/559 is done
-//
-// ANCHOR: book_rustobj_invokable_impl
-impl ffi::MyObjectQt {
-    /// Increment the number Q_PROPERTY
-    pub fn increment_number(self: Pin<&mut Self>) {
-        let previous = *self.as_ref().number();
-        self.set_number(previous + 1);
-    }
-
-    /// Print a log message with the given string and number
-    pub fn say_hi(&self, string: &QString, number: i32) {
-        println!("Hi from Rust! String is '{string}' and number is {number}");
+        pub fn say_hi(&self, string: &QString, number: i32) {
+            println!("Hi from Rust! String is '{string}' and number is {number}");
+        }
     }
 }
-// ANCHOR_END: book_rustobj_invokable_impl
-
-// ANCHOR_END: book_cxx_qt_module

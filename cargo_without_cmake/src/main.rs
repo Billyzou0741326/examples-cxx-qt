@@ -7,9 +7,6 @@
 
 //! This example provides demostrations of building a Cargo only CXX-Qt application
 
-// Use this crate to test that missing_docs works with our generated code for a Cargo only build
-#![deny(missing_docs)]
-
 /// A module for our Rust defined QObject
 // ANCHOR: book_cargo_imports
 pub mod cxxqt_object;

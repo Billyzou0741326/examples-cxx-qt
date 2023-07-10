@@ -12,6 +12,8 @@ edition = "2021"
 license = "MIT OR Apache-2.0"
 
 [dependencies]
+# Use `cxx = "1.0.83"` here instead!
+cxx = "=1.0.83"
 # Use `cxx-qt = "0.5"` here instead!
 cxx-qt = "=0.5.3"
 # Use `cxx-qt-lib = "0.5"` here instead!
