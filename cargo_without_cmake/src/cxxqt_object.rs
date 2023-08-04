@@ -10,7 +10,7 @@
 
 /// The bridge definition for our QObject
 #[cxx_qt::bridge]
-pub mod ffi {
+pub mod qobject {
     // ANCHOR_END: book_bridge_macro
 
     // ANCHOR: book_qstring_import
@@ -23,38 +23,50 @@ pub mod ffi {
 
     /// The Rust struct for the QObject
     // ANCHOR: book_rustobj_struct
-    #[cxx_qt::qobject(qml_uri = "examples_cxx_qt", qml_version = "1.0")]
-    pub struct MyObject {
-        #[qproperty]
-        number: i32,
-        #[qproperty]
-        string: QString,
+    unsafe extern "RustQt" {
+        #[qobject]
+        #[qml_element]
+        #[qproperty(i32, number)]
+        #[qproperty(QString, string)]
+        type MyObject = super::MyObjectRs;
     }
     // ANCHOR_END: book_rustobj_struct
 
-    // ANCHOR: book_rustobj_default
-    impl Default for MyObject {
-        fn default() -> Self {
-            Self {
-                number: 0,
-                string: QString::from(""),
-            }
+    unsafe extern "RustQt" {
+        #[qinvokable]
+        fn increment_number(self: Pin<&mut MyObject>);
+
+        #[qinvokable]
+        fn say_hi(self: &MyObject, string: &QString, number: i32);
+    }
+}
+
+use core::pin::Pin;
+use cxx_qt_lib::QString;
+
+pub struct MyObjectRs {
+    number: i32,
+    string: QString,
+}
+
+impl Default for MyObjectRs {
+    fn default() -> Self {
+        Self {
+            number: 0,
+            string: QString::from(""),
         }
     }
-    // ANCHOR_END: book_rustobj_default
-    //
-    impl qobject::MyObject {
-        /// Increment the number Q_PROPERTY
-        #[qinvokable]
-        pub fn increment_number(self: Pin<&mut Self>) {
-            let previous = *self.as_ref().number();
-            self.set_number(previous + 1);
-        }
+}
 
-        /// Print a log message with the given string and number
-        #[qinvokable]
-        pub fn say_hi(&self, string: &QString, number: i32) {
-            println!("Hi from Rust! String is '{string}' and number is {number}");
-        }
+impl qobject::MyObject {
+    /// Increment the number Q_PROPERTY
+    pub fn increment_number(self: Pin<&mut Self>) {
+        let previous = *self.as_ref().number();
+        self.set_number(previous + 1);
+    }
+
+    /// Print a log message with the given string and number
+    pub fn say_hi(&self, string: &QString, number: i32) {
+        println!("Hi from Rust! String is '{string}' and number is {number}");
     }
 }

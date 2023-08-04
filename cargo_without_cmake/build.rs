@@ -15,7 +15,7 @@ fn main() {
         // - Qt Qml requires linking Qt Network on macOS
         .qt_module("Network")
         // Generate C++ from the `#[cxx_qt::bridge]` module
-        .file("src/cxxqt_object.rs")
+        .qml_module("examples_cxx_qt", 1, 0, &["src/cxxqt_object.rs"])
         // Generate C++ code from the .qrc file with the rcc tool
         // https://doc.qt.io/qt-6/resources.html
         .qrc("qml/qml.qrc")

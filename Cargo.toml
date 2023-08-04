@@ -6,6 +6,7 @@
 [workspace]
 members = [
     "cargo_without_cmake",
+    "authenticator"
 ]
 
 [workspace.package]
