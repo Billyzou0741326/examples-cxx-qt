@@ -1,18 +1,15 @@
 [package]
-name = "qml-minimal-no-cmake"
+name = "voltage-encryptor"
 edition.workspace = true
 license.workspace = true
 version.workspace = true
 
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
 [dependencies]
-# Use `cxx = "1.0.83"` here instead!
 cxx = "1.0.95"
-# Use `cxx-qt = "0.5"` here instead!
 cxx-qt = { git = "https://github.com/KDAB/cxx-qt" }
-# Use `cxx-qt-lib = "0.5"` here instead!
 cxx-qt-lib = { git = "https://github.com/KDAB/cxx-qt" }
 
 [build-dependencies]
-# Use `cxx-qt-build = "0.5"` here instead!
 cxx-qt-build = { git = "https://github.com/KDAB/cxx-qt" }
-# ANCHOR_END: book_cargo_toml_no_cmake
